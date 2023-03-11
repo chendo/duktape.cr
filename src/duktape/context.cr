@@ -31,6 +31,8 @@ module Duktape
     include API::Time
     include API::Type
 
+    @mutex = Mutex.new
+    
     def initialize
       @ctx = Duktape.create_heap_default
       @heap_destroyed = false

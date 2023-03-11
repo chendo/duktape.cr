@@ -17,7 +17,9 @@ module Duktape
               LibDUK::Compile::Safe |
               LibDUK::Compile::NoFilename
 
-      LibDUK.eval_raw ctx, nil, 0, flags
+      @mutex.synchronize do
+        LibDUK.eval_raw ctx, nil, 0, flags
+      end
     end
 
     def eval(str : String)
@@ -115,7 +117,9 @@ module Duktape
               LibDUK::Compile::Safe |
               LibDUK::Compile::NoFilename
 
-      LibDUK.eval_raw ctx, src, 0, flags
+      @mutex.synchronize do
+        LibDUK.eval_raw ctx, src, 0, flags
+      end
     end
 
     def eval_string!(src : String)
